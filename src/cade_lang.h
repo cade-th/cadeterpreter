@@ -12,4 +12,16 @@ class Cade_Lang {
 	private:
 		int argc;
 		std::vector<std::string> args;
+
+		void run_file(const std::string& path);
+		void run_prompt();
+		
+		void init();
+
+		// So this is how you do method overloading
+		// Which is compile-time(static) polymorphism
+		void run();
+		void run(std::string);
+
+
 };
