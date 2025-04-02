@@ -2,26 +2,23 @@
 
 #include <string>
 #include <vector>
+#include "token.h"
 
 class Cade_Lang {
 	public:
 		Cade_Lang(int argc, char *argv[]);
-	
 		void printArgs();	
+		std::vector<Token> tokenize(std::string input);
 
 	private:
 		int argc;
 		std::vector<std::string> args;
-
 		void run_file(const std::string& path);
-		void run_prompt();
-		
-		void init();
-
-		// So this is how you do method overloading
-		// Which is compile-time(static) polymorphism
-		void run();
+		void run_shell();
 		void run(std::string);
+		
 
 
 };
+
+

@@ -11,35 +11,24 @@ Cade_Lang::Cade_Lang(int argc, char *argv[]) {
 		// put the arguments in order by putting them at the back of the array
 		args.push_back(argv[i]);
 	}
-	init();
-}
-
-void Cade_Lang::init() {
-	if (argc == 1) {
-		std::cout << "Usage: Cade_Lang [script]" << "\n";
-		exit(1);
-	}
-	else if (argc == 2) {
-		run_file(args[1]);	
-		// printArgs();
-	}
-	else {
-		run_prompt();
-		// printArgs();
-	}
-
-
-}
-
-void Cade_Lang::printArgs() {
-	std::cout << "Args: " << "\n";
-	for (int i=0; i < argc; i++) {
-		std::cout << args[i] << "\n";
+	
+	switch(argc) { 
+		case 1:
+			// No arguments so run shell
+			run_shell();
+			break;
+		case 2:
+			// Only other argument for now can be a file
+			run_file(args[1]);	
+			break;
+		default:
+			std::cout << "Usage: Cade_Lang [script]" << "\n";
+			exit(1);
+			break;
 	}
 }
 
-
-void Cade_Lang::run_prompt() {
+void Cade_Lang::run_shell() {
 	
 	bool is_running = true;
 
@@ -53,7 +42,7 @@ void Cade_Lang::run_prompt() {
 		if(input.empty()) continue;
 		if(input == ".quit") is_running = false;
 
-		run();
+		run(input);
 	}
 }
 	
@@ -71,13 +60,30 @@ void Cade_Lang::run_file(const std::string& path) {
 	std::string content = buffer.str();
 
 	run(content);
-
 }
 
-void Cade_Lang::run() {
+std::vector<Token> Cade_Lang::tokenize(std::string input) {
+    std::vector<Token> tokens;
+    std::stringstream ss(input);
+    std::string buffer;
 
+    while (ss >> buffer) {
+	Token temp(buffer);
+        tokens.push_back(temp);
+    }
+
+    return tokens;
 }
 
-void Cade_Lang::run(std::string) {
-
+void Cade_Lang::run(std::string input) {
+	std::vector<Token> tokens = tokenize(input);
 }
+
+void Cade_Lang::printArgs() {
+	std::cout << "Args: " << "\n";
+	for (int i=0; i < argc; i++) {
+		std::cout << args[i] << "\n";
+	}
+}
+
+
