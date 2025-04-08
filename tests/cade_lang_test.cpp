@@ -50,10 +50,10 @@ TEST_F(CadeLangTestFixture, num_token_test_3) {
 }
 
 TEST_F(CadeLangTestFixture, num_token_test_spaces) {
-	std::string test_string = "1  2 3  4 5 6 7  8 9";
+	std::string test_string = "1  2 3 cd   4 5 6 7  8 9";
 	std::vector<Token> tokens = cade_lang->tokenize(test_string);
 	int num_tokens = tokens.size();
-	int num_tokens_expected = 9;
+	int num_tokens_expected = 10;
 	EXPECT_EQ(num_tokens, num_tokens_expected);
 }
 

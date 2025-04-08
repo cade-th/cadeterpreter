@@ -62,7 +62,7 @@ void Cade_Lang::run_file(const std::string& path) {
 	run(content);
 }
 
-std::vector<Token> Cade_Lang::tokenize(std::string input) {
+std::vector<Token> Cade_Lang::tokenize_cpp(std::string input) {
     std::vector<Token> tokens;
     std::stringstream ss(input);
     std::string buffer;
@@ -73,6 +73,30 @@ std::vector<Token> Cade_Lang::tokenize(std::string input) {
     }
 
     return tokens;
+}
+
+std::vector<Token> Cade_Lang::tokenize(std::string input) {
+	std::vector<Token> tokens;
+	std::string buffer;
+
+	// Loop through the entire string character by character
+	for (int i=0; i < input.size();i++) {
+		// look for a space
+		if (input[i] != ' ') {
+			buffer.push_back(input[i]);
+		// omit multiple spaces
+		} else if (!buffer.empty()) {
+			Token temp(buffer);
+			tokens.push_back(temp);
+			buffer.clear();
+		}
+	}
+	// Catch the last token if the input doesn't end in a space since we don't have a string delimter for cpp strings
+	if (!buffer.empty()) {
+		Token temp(buffer);
+		tokens.push_back(temp);
+	}
+	return tokens;
 }
 
 void Cade_Lang::run(std::string input) {

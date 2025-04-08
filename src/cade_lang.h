@@ -9,6 +9,7 @@ class Cade_Lang {
 		Cade_Lang(int argc, char *argv[]);
 		void printArgs();	
 		std::vector<Token> tokenize(std::string input);
+		std::vector<Token> tokenize_cpp(std::string input);
 
 	private:
 		int argc;
